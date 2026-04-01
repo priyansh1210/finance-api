@@ -19,6 +19,23 @@ app.use(express.json({ limit: '10kb' }));
 app.use(morgan('short'));
 app.use(rateLimiter(200, 60_000));
 
+// Root route
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'Zorvyn Finance API',
+    version: '1.0.0',
+    status: 'running',
+    documentation: 'https://github.com/priyansh1210/zorvyn-finance-api#api-reference',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      records: '/api/records',
+      users: '/api/users',
+      dashboard: '/api/dashboard',
+    },
+  });
+});
+
 // Health check
 app.get('/api/health', (_req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
